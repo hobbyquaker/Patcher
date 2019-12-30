@@ -2,3 +2,4 @@ node_modules
 addon_tmp
 dist
 .idea
+CHANGELOG.md
