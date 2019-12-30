@@ -20,7 +20,7 @@ case "$1" in
     ;;
 
     info)
-        source $ADDON_DIR/etc/version
+        source $PATCHER_DIR/etc/version
         echo "Info: <div><a target=\"_blank\" href=\"https://github.com/hobbyquaker/patcher\">https://github.com/hobbyquaker/patcher</a></div>"
         echo "Name: Patcher"
         echo "Version: $PATCHER_VERSION"
@@ -30,9 +30,9 @@ case "$1" in
     ;;
 
     uninstall)
-        $ADDON_DIR/bin/update_addon patcher
+        $PATCHER_DIR/bin/update_addon patcher
 
-        rm -r $PATCH_DIR
+        rm -r $PATCHER_DIR
         rm -r $WWW_DIR
         rm $CONF_DIR/rc.d/patcher
 
