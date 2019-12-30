@@ -195,7 +195,7 @@
                     <td style="text-align: center;">${patch.applied ? '<i style="font-size: 1.9em; vertical-align: bottom;" class="fas fa-check-square"></i>' : ''}</td>
                     <td>
                         <button data-repo="${patch.repo}" data-name="${patch.name}" type="button" class="patch-view btn btn-primary btn-sm"><i class="fas fa-search-plus"></i> View</button>
-                        <button data-repo="${patch.repo}" data-name="${patch.name}" type="button" class="patch-apply btn btn-primary btn-sm"><i class="fas fa-hammer"></i> Patch</button>
+                        <button data-repo="${patch.repo}" data-name="${patch.name}" type="button" class="patch-apply btn btn-primary btn-sm" ${patch.applied ? 'disabled' : ''}><i class="fas fa-hammer"></i> Patch</button>
                         <button data-repo="${patch.repo}" data-name="${patch.name}" type="button" class="patch-revert btn btn-primary btn-sm"><i class="fas fa-undo-alt"></i> Revert</button>
                     </td></tr>\n`);
             }
