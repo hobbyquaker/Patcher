@@ -18,6 +18,29 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/diff.min.js"></script>
 
+<style>
+    #loader {
+        position: absolute;
+        display: block;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #535353;
+        z-index: 10000;
+    }
+    #loaderErr {
+        font-weight: bold;
+        color: #501212;
+        font-size: 1.3em;
+        padding-top: 160px;
+        margin-left: calc(50% - 200px);
+        margin-right: calc(50% - 200px);
+    }
+</style>
+
+<div id="loader"><div id="loaderErr"></div></div>
+
 <div id="alertSuccess" style="display: none;" class="fixed-top mx-auto alert alert-success alert-dismissible fade" role="alert">
     <strong>Command successful.</strong>
 </div>

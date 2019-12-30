@@ -29,8 +29,20 @@ function alert($elem) {
     }, 1600);
 }
 
+function invalidSession() {
+    $('#loader').show();
+    $('#loaderErr').html('Ungültige Sitzung. Bitte diese Seite schließen und erneut aus der Systemsteuerung des CCU WebUI öffnen.');
+}
+
 function getPatches() {
     fetch(`applied.cgi?sid=${sid}`).then(res => res.text()).then(res => {
+        if (res === 'error: invalid session\n') {
+            invalidSession();
+            return;
+        } else {
+            $('#loader').hide();
+        }
+
         const applied = [];
         res.split('\n').forEach(line => {
             if (line) {
@@ -40,6 +52,10 @@ function getPatches() {
         console.log('applied', applied);
 
         fetch(`patches.cgi?sid=${sid}`).then(res => res.text()).then(res => {
+            if (res === 'error: invalid session\n') {
+                invalidSession();
+                return;
+            }
             let repo;
             let match;
             patches = [];
@@ -102,6 +118,10 @@ $('#update').on('click', () => {
     $('#progressModal').modal({keyboard: false, show: true});
     $('#progressClose').attr('disabled', true);
     fetch(`update.cgi?sid=${sid}`).then(res => res.body).then(body => {
+        if (body === 'error: invalid session\n') {
+            invalidSession();
+            return;
+        }
         const reader = body.getReader();
         let output = '';
         function read() {
@@ -126,7 +146,7 @@ $('#update').on('click', () => {
 
 $('#configure').on('click', () => {
     $('#sourcesList').html('');
-    fetch(`sources.json?sid=${sid}`).then(res => res.json()).then(res => {
+    fetch(`sources.json`).then(res => res.json()).then(res => {
         res.forEach(src => {
             appendSource(src.url);
         });
@@ -154,6 +174,10 @@ $('#saveSources').on('click', () => {
         },
         body: JSON.stringify(sources)
     }).then(res => res.text()).then(res => {
+        if (res === 'error: invalid session\n') {
+            invalidSession();
+            return;
+        }
         if (res === 'ok\n') {
             alert($('#alertSuccess'));
         } else {
@@ -191,6 +215,10 @@ $(document).on('click', '.patch-apply', function () {
     $('#progressModal').modal({keyboard: false, show: true});
     $('#progressClose').attr('disabled', true);
     fetch(`apply.cgi?sid=${sid}&repo=${repo}&name=${name}`).then(res => res.body).then(body => {
+        if (body === 'error: invalid session\n') {
+            invalidSession();
+            return;
+        }
         const reader = body.getReader();
         let output = '';
         function read() {
@@ -221,6 +249,10 @@ $(document).on('click', '.patch-revert', function () {
     $('#progressModal').modal({keyboard: false, show: true});
     $('#progressClose').attr('disabled', true);
     fetch(`revert.cgi?sid=${sid}&repo=${repo}&name=${name}`).then(res => res.body).then(body => {
+        if (body === 'error: invalid session\n') {
+            invalidSession();
+            return;
+        }
         const reader = body.getReader();
         let output = '';
         function read() {
