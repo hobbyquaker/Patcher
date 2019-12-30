@@ -42,8 +42,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 else
     tar --owner=root --group=root -czf $BUILD_DIR/dist/$ADDON_FILE *
 fi
-cd $BUILD_DIR
 
+cd $BUILD_DIR
+rm -r $ADDON_TMP
 
 echo "done."
 
