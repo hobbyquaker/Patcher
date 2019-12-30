@@ -29,8 +29,8 @@ EOL
 
 git log `git describe --tags --abbrev=0`..HEAD --pretty=format:'* %h @%an %s' >> CHANGELOG.md
 
-echo "compressing addon package $ADDON_FILE ..."
 ADDON_FILE=patcher-$PATCHER_VERSION.tar.gz
+echo "compressing addon package $ADDON_FILE ..."
 
 cd $ADDON_TMP
 if [[ "$OSTYPE" == "darwin"* ]]; then
