@@ -44,7 +44,6 @@ else
 fi
 
 cd $BUILD_DIR
-rm -r $ADDON_TMP
 
 echo "done."
 
