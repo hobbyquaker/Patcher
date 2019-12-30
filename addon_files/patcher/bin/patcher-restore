@@ -1,12 +1,17 @@
 #/bin/sh
 
+source /usr/local/addons/patcher/etc/version
+
+logger -t patcher -p daemon.info "patcher v$PATCHER_VERSION (c) Sebastian Raff <hobbyquaker@gmail.com>"
+
 if [ -f /etc/patcher-patched ]; then
+    logger -t patcher -p daemon.info "patcher-restore: nothing to do. exiting."
     echo "patcher-restore: nothing to do. exiting."
     exit 0
 fi
 
 while read p; do
   if [ ! -z "$p" ]; then
-    /usr/local/addons/patcher/bin/patcher-patch $p
+    /usr/local/addons/patcher/bin/patcher-patch $p | logger -t patcher -p daemon.info
   fi
 done </usr/local/addons/patcher/var/applied
