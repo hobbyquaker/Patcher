@@ -21,7 +21,7 @@ cat $PATCH | grep "+++ " | sed "s/+++ \(.*\)/\1/g" | while read -r line ; do
         echo "creating ${line}.orig"
         cp ${line} ${line}.orig
         # remove windows cr
-        cat ${line}.orig | sed "s/\r$//" > ${line}
+        #cat ${line}.orig | sed "s/\r$//" > ${line}
     fi
 done
 
