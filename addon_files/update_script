@@ -19,6 +19,9 @@ ln -sf $PATCHER_DIR/var/repos $WWW_DIR/repos
 
 ln -sf $PATCHER_DIR/bin/patcher $CONF_DIR/rc.d/patcher
 
+touch $PATCHER_DIR/var/applied
+
+ln -sf $PATCHER_DIR/bin/update_addon ./
 touch $CONF_DIR/hm_addons.cfg
 ./update_addon patcher patcher.cfg
 
