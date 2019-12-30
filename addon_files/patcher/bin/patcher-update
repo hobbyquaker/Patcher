@@ -1,8 +1,8 @@
 #!/bin/sh
 
 PATCHER=/usr/local/addons/patcher
-PATH=$PATCHER/bin:$PATH
-LD_LIBRARY_PATH=$PATCHER/lib:$LD_LIBRARY_PATH
+export PATH=$PATCHER/bin:$PATH
+export LD_LIBRARY_PATH=$PATCHER/lib:$LD_LIBRARY_PATH
 
 jq -r '.[].url' $PATCHER/etc/sources.json | while read S_URL; do
     S_SRC=`echo $S_URL | sed 's/https:\/\/api\.github\.com\/repos\/\(.*\)\/\(.*\)\/contents\/\(.*\)/\1\/\2/g'`
