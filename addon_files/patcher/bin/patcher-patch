@@ -26,9 +26,9 @@ cat $PATCH | grep "+++ " | sed "s/+++ \(.*\)/\1/g" | while read -r line ; do
 done
 
 if grep -q "$1" "$APPLIED"; then
-    patch -p0 --dry-run -i $PATCH && touch /etc/patcher-patched
+    patch -p0 -i $PATCH && touch /etc/patcher-patched
 else
-    patch -p0 --dry-run -i $PATCH && touch /etc/patcher-patched && echo $1 >> $APPLIED
+    patch -p0 -i $PATCH && touch /etc/patcher-patched && echo $1 >> $APPLIED
 fi
 
 echo "remount ro /"

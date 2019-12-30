@@ -14,7 +14,7 @@ echo "revert $1"
 echo "remount rw /"
 mount -o remount,rw /
 
-patch --dry-run -p0 -R -i $PATCH
+patch -p0 -R -i $PATCH
 
 sed -i "/${1//\//\\\/}/d" $APPLIED
 
