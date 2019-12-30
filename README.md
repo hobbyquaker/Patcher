@@ -5,8 +5,7 @@
 Mit diesem Addon können Patches komfortabel auf der CCU3 angewandt werden. Nach einem Firmwareupdate werden die 
 Patches (soweit möglich) automatisch wiederhergestellt.
 
-__Dieses Addon hat das Potential die CCU3 Firmware zu beschädigen, Nutzung auf eigene Gefahr!__
-
+[Projektvorstellung im Homematic Forum, Screenshots](https://homematic-forum.de/forum/viewtopic.php?f=18&t=55567)
 
 ### Lizenz
 
