@@ -1,0 +1,26 @@
+#!/bin/sh
+
+ADDONS_DIR=/usr/local/addons
+PATCHER_DIR=$ADDONS_DIR/patcher
+CONF_DIR=/usr/local/etc/config
+WWW_DIR=$CONF_DIR/addons/www/patcher
+
+mkdir -p $ADDONS_DIR && chmod 755 $ADDONS_DIR
+
+cp -af patcher $ADDONS_DIR/
+
+if [ ! -f $PATCHER_DIR/etc/sources.json ]; then
+  cp $PATCHER_DIR/etc/sources.json.dist $PATCHER_DIR/etc/sources.json
+fi
+
+ln -sfT $PATCHER_DIR/www $WWW_DIR
+ln -sf $PATCHER_DIR/etc/sources.json $WWW_DIR/sources.json
+ln -sf $PATCHER_DIR/var/repos $WWW_DIR/repos
+
+ln -sf $PATCHER_DIR/bin/patcher $CONF_DIR/rc.d/patcher
+
+touch $CONF_DIR/hm_addons.cfg
+./update_addon patcher patcher.cfg
+
+sync
+exit 0

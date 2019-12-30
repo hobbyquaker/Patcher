@@ -1,0 +1,49 @@
+#/bin/sh
+
+ADDONS_DIR=/usr/local/addons
+PATCHER_DIR=$ADDONS_DIR/patcher
+CONF_DIR=/usr/local/etc/config
+WWW_DIR=$CONF_DIR/addons/www/patcher
+
+case "$1" in
+
+    stop)
+        exit 0
+    ;;
+
+    start)
+        /usr/local/addons/patcher/bin/patcher-restore
+    ;;
+
+    restart)
+        /usr/local/addons/patcher/bin/patcher-restore
+    ;;
+
+    info)
+        source $ADDON_DIR/etc/version
+        echo "Info: <div><a target=\"_blank\" href=\"https://github.com/hobbyquaker/patcher\">https://github.com/hobbyquaker/patcher</a></div>"
+        echo "Name: Patcher"
+        echo "Version: $PATCHER_VERSION"
+        echo "Update: /addons/patcher/update_check.cgi"
+        echo "Config-Url: /addons/patcher"
+        echo "Operations: uninstall"
+    ;;
+
+    uninstall)
+        $ADDON_DIR/bin/update_addon patcher
+
+        rm -r $PATCH_DIR
+        rm -r $WWW_DIR
+        rm $CONF_DIR/rc.d/patcher
+
+        logger -t patcher -p daemon.info "Uninstalled Patcher"
+    ;;
+
+    *)
+        echo "Usage: patcher {start|stop|restart|info|uninstall}" >&2
+        exit 1
+    ;;
+
+esac
+
+exit 0

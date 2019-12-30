@@ -1,0 +1,37 @@
+#!/bin/sh
+
+# Todo prevent directory traversal
+PATCH=/usr/local/addons/patcher/var/repos/$1
+APPLIED=/usr/local/addons/patcher/var/applied
+
+if [ ! -f "$PATCH" ]; then
+    echo "error: $1 not found"
+    exit 1
+fi
+
+echo "apply $1"
+
+echo "remount rw /"
+mount -o remount,rw /
+
+cat $PATCH | grep "+++ " | sed "s/+++ \(.*\)/\1/g" | while read -r line ; do
+    if [ -f "${line}.orig" ]; then
+        echo "${line}.orig already existing. will keep that."
+    else
+        echo "creating ${line}.orig"
+        cp ${line} ${line}.orig
+        # remove windows cr
+        cat ${line}.orig | sed "s/\r$//" > ${line}
+    fi
+done
+
+if grep -q "$1" "$APPLIED"; then
+    patch -p0 --dry-run -i $PATCH && touch /etc/patcher-patched
+else
+    patch -p0 --dry-run -i $PATCH && touch /etc/patcher-patched && echo $1 >> $APPLIED
+fi
+
+echo "remount ro /"
+mount -o remount,ro /
+
+exit 0

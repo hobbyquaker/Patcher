@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# Todo prevent directory traversal
+PATCH=/usr/local/addons/patcher/var/repos/$1
+APPLIED=/usr/local/addons/patcher/var/applied
+
+if [ ! -f "$PATCH" ]; then
+    echo "error: $1 not found"
+    exit 1
+fi
+
+echo "revert $1"
+
+echo "remount rw /"
+mount -o remount,rw /
+
+patch --dry-run -p0 -R -i $PATCH
+
+sed -i "/${1//\//\\\/}/d" $APPLIED
+
+echo "remount ro /"
+mount -o remount,ro /
+
+exit 0

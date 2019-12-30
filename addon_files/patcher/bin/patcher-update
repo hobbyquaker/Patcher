@@ -1,0 +1,18 @@
+#!/bin/sh
+
+PATCHER=/usr/local/addons/patcher
+PATH=$PATCHER/bin:$PATH
+LD_LIBRARY_PATH=$PATCHER/lib:$LD_LIBRARY_PATH
+
+jq -r '.[].url' $PATCHER/etc/sources.json | while read S_URL; do
+    S_SRC=`echo $S_URL | sed 's/https:\/\/api\.github\.com\/repos\/\(.*\)\/\(.*\)\/contents\/\(.*\)/\1\/\2/g'`
+    S_ID=`echo $S_URL | sed 's/https:\/\/api\.github\.com\/repos\/\(.*\)\/\(.*\)\/contents\/\(.*\)/\1_\2/g'`
+    S_PATH=$PATCHER/var/repos/$S_ID
+    mkdir -p "$S_PATH"
+    echo "get $S_URL"
+    curl -s "$S_URL" | jq -r '.[].download_url' | grep ".patch$" | while read P_URL; do
+        P_PATH="$S_PATH/${P_URL##*/}"
+        echo -n "get $S_SRC ${P_URL##*/} ... "
+        curl -s "$P_URL" | sed "s/\([---|+++] \)occu\/WebUI/\1/g" | sed "s/\([---|+++] \)occu\/arm-gnueabihf\/packages-eQ-3\/WebUI/\1/g" > "$P_PATH" && echo "success." || echo "fail!"
+    done
+done

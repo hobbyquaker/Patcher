@@ -1,0 +1,24 @@
+branches:
+  only:
+  - master
+before_deploy:
+- git config --local user.name "hobbyquaker"
+- git config --local user.email "hobbyquaker@gmail.com"
+- "./build.sh"
+- source ./addon_tmp/patcher/etc/version
+- git tag "v$PATCHER_VERSION"
+deploy:
+  provider: releases
+  api_key: "$GITHUB_OAUTH_TOKEN"
+  file_glob: true
+  file: dist/*
+  skip_cleanup: true
+  on:
+    branches:
+      only:
+      - master
+  draft: false
+after_deploy:
+- gem install octokit:4.14.0
+- gem install faraday:0.15.4
+- "./github_release.rb -s $GITHUB_OAUTH_TOKEN -r hobbyquaker/Patcher -c CHANGELOG.md -t $PATCHER_VERSION"
