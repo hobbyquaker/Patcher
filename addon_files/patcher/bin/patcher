@@ -36,6 +36,11 @@ case "$1" in
         rm -r $WWW_DIR
         rm $CONF_DIR/rc.d/patcher
 
+        source /VERSION
+        if [ "$PRODUCT" = "ccu3" ]; then
+            rm $CONF_DIR/lighttpd/patcher.conf
+        fi
+
         logger -t patcher -p daemon.info "Uninstalled Patcher"
     ;;
 

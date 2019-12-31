@@ -5,6 +5,11 @@ PATCHER_DIR=$ADDONS_DIR/patcher
 CONF_DIR=/usr/local/etc/config
 WWW_DIR=$CONF_DIR/addons/www/patcher
 
+mount | grep /usr/local 2>&1 >/dev/null
+if [ $? -eq 1 ]; then
+  mount /usr/local
+fi
+
 mkdir -p $ADDONS_DIR && chmod 755 $ADDONS_DIR
 
 cp -af patcher $ADDONS_DIR/
@@ -18,6 +23,11 @@ ln -sf $PATCHER_DIR/etc/sources.json $WWW_DIR/sources.json
 ln -sf $PATCHER_DIR/var/repos $WWW_DIR/repos
 
 ln -sf $PATCHER_DIR/bin/patcher $CONF_DIR/rc.d/patcher
+
+if ! grep -q "server.stream-response-body" "/etc/lighttpd/lighttpd.conf" ; then
+    mkdir -p $CONF_DIR/lighttpd
+    ln -sf $PATCHER_DIR/etc/lighttpd.conf $CONF_DIR/lighttpd/patcher.conf
+fi
 
 touch $PATCHER_DIR/var/applied
 
