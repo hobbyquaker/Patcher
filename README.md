@@ -1,5 +1,9 @@
 # Patcher
 
+[![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/hobbyquaker/Patcher?include_prereleases&sort=semver)](https://github.com/hobbyquaker/Patcher/releases/latest)
+[![Travis (.org)](https://img.shields.io/travis/hobbyquaker/Patcher)](https://travis-ci.org/hobbyquaker/Patcher/builds)
+[![GitHub](https://img.shields.io/github/license/hobbyquaker/Patches)](LICENSE)
+
 > Patch Frontend Addon for the Homematic CCU3
 
 Mit diesem Addon können Patches komfortabel auf der CCU3 angewandt werden. Nach einem Firmwareupdate werden die 
