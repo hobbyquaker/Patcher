@@ -4,5 +4,8 @@
   },
   {
     "url": "https://api.github.com/repos/Homematic-Community/CCU3-Patches/contents/patches"
+  },
+  {
+    "url": "https://api.github.com/repos/hobbyquaker/CCU3-Patches/contents/patches"
   }
 ]
