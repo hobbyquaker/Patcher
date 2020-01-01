@@ -13,6 +13,8 @@ echo "apply $1"
 
 echo "remount rw /"
 mount -o remount,rw /
+echo "remount rw /mnt/boot_par"
+mount -o remount,rw /mnt/boot_par
 
 cat $PATCH | grep "+++ " | sed "s/+++ \(.*\)/\1/g" | while read -r line ; do
     if [ -f "${line}.orig" ]; then
@@ -31,6 +33,8 @@ else
     patch -p0 -i $PATCH && touch /etc/patcher-patched && echo $1 >> $APPLIED
 fi
 
+echo "remount ro /mnt/boot_par"
+mount -o remount,ro /mnt/boot_par
 echo "remount ro /"
 mount -o remount,ro /
 
